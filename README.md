@@ -129,7 +129,7 @@ All multipliers maintain fair expected value!
 
 ## 🎥 Demo
 
-**Live Demo**: [Coming soon - Deploy to Vercel]
+**Live Demo**: https://proof-of-luck-casino-k0ar3wja3-iggy-s-projects.vercel.app
 
 **Video Demo**: [3-minute walkthrough coming soon]
 
