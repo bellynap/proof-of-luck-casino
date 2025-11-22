@@ -11,3 +11,8 @@ cache/
 typechain-types/
 .env
 .env
+frontend/.next/
+contracts/cache/
+contracts/artifacts/
+rofl/target/
+rofl/wasm/
