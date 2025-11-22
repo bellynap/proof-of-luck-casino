@@ -1,0 +1,7 @@
+.exit
+await gm.depositHouse({ value: ethers.parseEther("50") })
+const gm = await ethers.getContractAt("GameManager", "0x7c4d3367f346E80E655Ab87620A790b5d43a9296")
+.exit
+console.log("House balance:", ethers.formatEther(stats[3]), "TEST")
+const stats = await gm.getStats()
+const gm = await ethers.getContractAt("GameManager", "0x7c4d3367f346E80E655Ab87620A790b5d43a9296")

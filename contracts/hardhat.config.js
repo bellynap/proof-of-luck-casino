@@ -13,6 +13,11 @@ module.exports = {
       url: "https://testnet.sapphire.oasis.io",
       chainId: 0x5aff,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
+    },
+    "flare-testnet": {
+      url: "https://coston2-api.flare.network/ext/C/rpc",
+      chainId: 114,
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
     }
   }
 };
