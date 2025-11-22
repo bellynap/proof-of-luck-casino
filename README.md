@@ -278,11 +278,18 @@ MIT License - Open source for the community
 
 ## 🔗 Links
 
-- **GitHub**: https://github.com/bellynap/proof-of-luck-casino
-- **Live Demo**: [Deploy URL]
-- **Video Demo**: [YouTube URL]
-- **Contract Explorer**: [Sapphire Explorer Link]
+## 🔗 Links
 
+- **GitHub**: https://github.com/bellynap/proof-of-luck-casino
+- **Docker Hub**: https://hub.docker.com/r/bellynap/casino-resolver
+
+### 📜 Smart Contracts (Sapphire Testnet)
+- **GameManager**: [0x7c4d3367f346E80E655Ab87620A790b5d43a9296](https://explorer.oasis.io/testnet/sapphire/address/0x7c4d3367f346E80E655Ab87620A790b5d43a9296)
+- **LuckToken**: [0xf11A0b917DD20A0C2b5Da783E3136a98Ab122F3D](https://explorer.oasis.io/testnet/sapphire/address/0xf11A0b917DD20A0C2b5Da783E3136a98Ab122F3D)
+- **MysteryBoxNFT**: [0xe41cF29Dc868c0F5a842a9eD2a78bB120d7BAA10](https://explorer.oasis.io/testnet/sapphire/address/0xe41cF29Dc868c0F5a842a9eD2a78bB120d7BAA10)
+
+### 🔐 ROFL
+- **App ID**: rofl1ayhpurhf656966e0adv062c0a0fa574adf7edc20b8b30ab324137b217e88a
 ---
 
 **Built with ❤️ using Oasis ROFL at ETHGlobal Buenos Aires 2025**
