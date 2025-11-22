@@ -1,0 +1,6 @@
+services:
+  casino-resolver:
+    image: docker.io/bellynap/casino-resolver:latest
+    platform: linux/amd64
+    environment:
+      - PRIVATE_KEY=${ROFL_SECRET_PRIVATE_KEY}

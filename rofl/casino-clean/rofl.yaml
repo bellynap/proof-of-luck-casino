@@ -1,0 +1,17 @@
+name: casino-resolver
+version: 0.1.0
+tee: tdx
+kind: container
+resources:
+  memory: 512
+  cpus: 1
+  storage:
+    kind: disk-persistent
+    size: 512
+container:
+  compose: compose.yaml
+deployments:
+  default:
+    network: testnet
+    paratime: sapphire
+    app: rofl1ayhpurhf656966e0adv062c0a0fa574adf7edc20b8b30ab324137b217e88a
