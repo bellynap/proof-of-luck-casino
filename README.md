@@ -87,7 +87,7 @@ The $200B+ gambling industry runs on trust, not proof.
 
 **Status:** Implementation Complete, Deployment Blocked by CLI Bug
 
-### What We Built
+### What I Built
 - ✅ ROFL app registered on Sapphire Testnet
   - App ID: `rofl1ayhpurhf656966e0adv062c0a0fa574adf7edc20b8b30ab324137b217e88a`
 - ✅ Docker container built and published
@@ -263,11 +263,10 @@ cargo test
 - Could extend to prediction markets, lotteries, gaming
 - Demonstrates path to regulatory compliance via provable fairness
 
-## 🏆 Hackathon Tracks
+# 🏆 Hackathon Tracks
 
-**Primary**: Oasis Protocol - Build with ROFL  
-**Secondary**: Chainlink - Verifiable randomness integration  
-**Tertiary**: Flare - Multi-chain deployment ready
+**Primary**: Oasis Protocol - Provably fair gaming with ROFL + Sapphire
+**Secondary**: Hardhat - Smart contract development and deployment tooling
 
 ## 🗺️ Roadmap
 
@@ -295,6 +294,19 @@ cargo test
 - Built entire project in 24 hours at ETHGlobal Buenos Aires
 - First time using Oasis ROFL
 - Demonstrated production-ready dApp development
+
+## 🤖 AI Tools Used
+
+**Ideogram.ai** - Generated the QuantumBet logo
+
+**Claude (Anthropic)** - Coding assistant throughout development for:
+- Smart contract guidance and Solidity best practices
+- ROFL implementation and debugging assistance
+- Frontend development (React components, CSS animations)
+- MetaMask integration patterns
+- Documentation editing and technical writing
+
+All architectural decisions, game design, contract deployment, ROFL registration, and final implementations were developer-led.
 
 ## 📝 License
 
