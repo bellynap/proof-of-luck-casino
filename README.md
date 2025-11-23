@@ -1,4 +1,4 @@
-# 🎰 Proof of Luck Casino
+# 🎰 QuantumBet
 
 **The casino that can't cheat you** - Provably fair gambling powered by Oasis ROFL + Sapphire
 
@@ -16,7 +16,7 @@ The $200B+ gambling industry runs on trust, not proof.
 
 ## 💡 Our Solution
 
-**Proof of Luck Casino** uses Oasis ROFL (Runtime Off-chain Logic) to generate randomness inside a **Trusted Execution Environment (TEE)**. This means:
+**QuantumBet** uses Oasis ROFL (Runtime Off-chain Logic) to generate randomness inside a **Trusted Execution Environment (TEE)**. This means:
 
 ✅ **Hardware-isolated randomness** - Generated in Intel SGX/AMD SEV  
 ✅ **Provably fair** - ROFL signs all results with TEE-backed keys  
@@ -132,7 +132,7 @@ All multipliers maintain fair expected value!
 
 ## 🎥 Demo
 
-**Live Demo**: https://proof-of-luck-casino-3qefeqjlu-iggy-s-projects.vercel.app
+**Live Demo**: https://quantumbet-3qefeqjlu-iggy-s-projects.vercel.app
 **Video Demo**: [3-minute walkthrough coming soon]
 
 ## 🛠️ Local Development
@@ -148,8 +148,8 @@ MetaMask
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/bellynap/proof-of-luck-casino.git
-cd proof-of-luck-casino
+git clone https://github.com/bellynap/quantumbet.git
+cd quantumbet
 ```
 
 2. **Install contract dependencies**
@@ -282,7 +282,7 @@ MIT License - Open source for the community
 
 ## 🔗 Links
 
-- **GitHub**: https://github.com/bellynap/proof-of-luck-casino
+- **GitHub**: https://github.com/bellynap/quantumbet
 - **Docker Hub**: https://hub.docker.com/r/bellynap/casino-resolver
 
 ### 📜 Smart Contracts (Sapphire Testnet)
