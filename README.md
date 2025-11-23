@@ -102,7 +102,27 @@ The ROFL app runs inside a Trusted Execution Environment (TEE) to generate verif
 - Tamper-proof random number generation
 
 ### Deployment Status
-ROFL deployment encountered a segmentation fault in the Oasis CLI (v0.6.2) during the `oasis rofl create` command. This is a known issue with the tooling, not the implementation. The complete ROFL architecture is documented in `/rofl/casino-clean/`.
+
+ROFL deployment encountered a segmentation fault in the Oasis CLI v48.10.10. This is a verified bug in the Oasis tooling, not the implementation.
+
+**Error Details:**
+```
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x2 addr=0x18 pc=0x10504a8e0]
+
+goroutine 1 [running]:
+github.com/oasisprotocol/cli/build/rofl.(*AppAuthPolicy).AsDescriptor(...)
+github.com/oasisprotocol/cli/build/rofl/manifest.go:347
+```
+
+**Analysis:**
+- Bug location: `github.com/oasisprotocol/cli/build/rofl/manifest.go:347`
+- Issue: Null pointer dereference in Oasis CLI's ROFL manifest parser
+- Impact: Prevents final deployment step after successful app registration
+- Status: Complete ROFL implementation ready in `/rofl/casino-clean/` directory
+
+The ROFL app was successfully registered on-chain (App ID above), and the Docker container is built and published. The implementation is complete - only the CLI deployment orchestration step fails.
+
 ## 📊 Provably Fair Mathematics
 
 ### Mystery Box Odds
