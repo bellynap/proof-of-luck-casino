@@ -634,20 +634,22 @@ setTimeout(() => {
   <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h1 style={{
-            fontSize: '4rem',
-            fontWeight: 'bold',
-            marginBottom: '1rem',
-            background: 'linear-gradient(to right, #fbbf24, #ec4899)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            🎰 Proof of Luck Casino
-          </h1>
-          <p style={{ fontSize: '1.25rem', color: '#d1d5db', marginBottom: '1.5rem' }}>
-            Provably fair gambling powered by Oasis ROFL + Sapphire
-          </p>
-          
+<h1 style={{
+  fontSize: '4rem',
+  fontWeight: 'bold',
+  marginBottom: '1rem',
+  background: 'linear-gradient(to right, #fbbf24, #ec4899)',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent'
+}}>🎲 QuantumBet</h1>
+<p style={{ fontSize: '1.25rem', color: '#d1d5db', marginBottom: '0.5rem' }}>
+  Where luck meets proof
+</p>
+<p style={{ fontSize: '1rem', color: '#9ca3af', marginBottom: '1.5rem' }}>
+  Provably fair gambling powered by Oasis ROFL + Sapphire
+</p>         
+
+
           {wrongNetwork && account && (
             <div style={{
               background: 'rgba(239,68,68,0.2)',

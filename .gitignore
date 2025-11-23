@@ -16,3 +16,4 @@ contracts/cache/
 contracts/artifacts/
 rofl/target/
 rofl/wasm/
+.vercel
