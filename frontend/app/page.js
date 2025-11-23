@@ -32,7 +32,9 @@ export default function Home() {
   const [diceRollState, setDiceRollState] = useState('idle');
   const [mysteryBoxState, setMysteryBoxState] = useState('idle');
   const [revealedNFT, setRevealedNFT] = useState(null);
-  const [wrongNetwork, setWrongNetwork] = useState(false);
+const [coinChoice, setCoinChoice] = useState('heads');  
+const [coinResult, setCoinResult] = useState(null);
+const [wrongNetwork, setWrongNetwork] = useState(false);
 
   // Sound effects
   const playSound = (type) => {
@@ -181,9 +183,14 @@ export default function Home() {
     }
 
     try {
+// Reset all animation states first
+  setCoinFlipState('idle');
+  setDiceRollState('idle');
+  setMysteryBoxState('idle');
       setLoading(true);
       setIsAnimating(true);
-      playSound('click');
+setCoinResult(null);     
+ playSound('click');
       
       let data;
       let gameName;
@@ -193,11 +200,86 @@ export default function Home() {
         gameName = "Mystery Box";
         setMessage("🎁 Opening mystery box...");
         setMysteryBoxState('shaking');
+
+
+
+// Generate random NFT after animation with procedural generation
+setTimeout(() => {
+  const rand = Math.random() * 100;
+  
+  // Procedural NFT generator
+  const generateNFT = (rarityType, multiplier) => {
+    const traits = {
+      common: {
+        colors: ['#94a3b8', '#64748b', '#475569'],
+        emojis: ['🎴', '🎭', '🎪', '🎨', '🎯', '🎲', '🃏', '🎰'],
+        adjectives: ['Simple', 'Basic', 'Plain', 'Common', 'Standard', 'Ordinary'],
+        nouns: ['Card', 'Token', 'Chip', 'Piece', 'Coin', 'Dice']
+      },
+      rare: {
+        colors: ['#3b82f6', '#2563eb', '#1d4ed8', '#06b6d4'],
+        emojis: ['💎', '🔮', '🏆', '⚡', '🌊', '❄️', '💠', '🔷'],
+        adjectives: ['Shiny', 'Brilliant', 'Gleaming', 'Radiant', 'Lustrous', 'Sparkling'],
+        nouns: ['Diamond', 'Crystal', 'Gem', 'Jewel', 'Sapphire', 'Trophy']
+      },
+      epic: {
+        colors: ['#a855f7', '#9333ea', '#7e22ce', '#c026d3'],
+        emojis: ['👑', '🦄', '🎆', '🌈', '🔥', '⚔️', '🏰', '🌙'],
+        adjectives: ['Mystical', 'Ancient', 'Legendary', 'Divine', 'Enchanted', 'Sacred'],
+        nouns: ['Crown', 'Relic', 'Artifact', 'Treasure', 'Unicorn', 'Phoenix']
+      },
+      legendary: {
+        colors: ['#eab308', '#ca8a04', '#a16207', '#f59e0b'],
+        emojis: ['⭐', '🌟', '💫', '✨', '🌠', '☄️', '🔆', '🌅'],
+        adjectives: ['Cosmic', 'Celestial', 'Supreme', 'Ultimate', 'Ethereal', 'Transcendent'],
+        nouns: ['Star', 'Phoenix', 'Dragon', 'Oracle', 'Nebula', 'Supernova']
+      }
+    };
+    
+    const tier = traits[rarityType];
+    const color = tier.colors[Math.floor(Math.random() * tier.colors.length)];
+    const emoji1 = tier.emojis[Math.floor(Math.random() * tier.emojis.length)];
+    const emoji2 = tier.emojis[Math.floor(Math.random() * tier.emojis.length)];
+    const adj = tier.adjectives[Math.floor(Math.random() * tier.adjectives.length)];
+    const noun = tier.nouns[Math.floor(Math.random() * tier.nouns.length)];
+    
+    // Generate unique ID
+    const uniqueId = Math.floor(Math.random() * 10000);
+    
+    return {
+      rarity: rarityType.charAt(0).toUpperCase() + rarityType.slice(1),
+      color: color,
+      emoji: emoji1 + emoji2,
+      name: `${adj} ${noun} #${uniqueId}`,
+      multiplier: multiplier
+    };
+  };
+  
+  let nft;
+  if (rand < 75) {
+    nft = generateNFT('common', '0.5x');
+  } else if (rand < 92.5) {
+    nft = generateNFT('rare', '1x');
+  } else if (rand < 97.5) {
+    nft = generateNFT('epic', '3x');
+  } else {
+    nft = generateNFT('legendary', '10x');
+  }
+  
+  setRevealedNFT(nft);
+  setMysteryBoxState('opening');
+  setTimeout(() => setMysteryBoxState('idle'), 800);
+}, 2400);  
       } else if (gameType === 'coinFlip') {
         data = '0x6f52d1e4';
         gameName = "Coin Flip";
         setMessage("🪙 Flipping coin...");
-        setCoinFlipState('flipping');   
+        setCoinFlipState('flipping');
+// Simulate coin flip result
+setTimeout(() => {
+  const result = Math.random() < 0.5 ? 'heads' : 'tails';
+  setCoinResult(result);
+}, 2000);   
       } else if (gameType === 'diceRoll') {
         const multiplierHex = multiplier.toString(16).padStart(64, '0');
         data = '0xb6b55f25' + multiplierHex;
@@ -363,8 +445,116 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+{/* NFT Reveal Modal */}
+      {revealedNFT && (
+        <div onClick={() => setRevealedNFT(null)} style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.9)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          padding: '2rem'
+        }}>
+          <div onClick={(e) => e.stopPropagation()} className={styles.nftCard} style={{
+            background: `linear-gradient(to bottom right, ${revealedNFT.color}, #1e293b)`,
+            borderRadius: '1rem',
+            padding: '3rem',
+            maxWidth: '400px',
+            border: `3px solid ${revealedNFT.color}`,
+            textAlign: 'center',
+            boxShadow: `0 0 50px ${revealedNFT.color}`
+          }}>
+            <div style={{ fontSize: '120px', marginBottom: '1rem' }}>{revealedNFT.emoji}</div>
+            <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', color: revealedNFT.color, textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>
+              {revealedNFT.rarity}
+            </h2>
+            <p style={{ fontSize: '1.5rem', marginBottom: '2rem', opacity: 0.9 }}>
+              Token Multiplier: {revealedNFT.multiplier}
+            </p>
+            <button onClick={() => setRevealedNFT(null)} style={{
+              background: 'white',
+              color: '#1e293b',
+              padding: '1rem 2rem',
+              borderRadius: '0.5rem',
+              border: 'none',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              width: '100%'
+            }}>
+              Awesome! 🎉
+            </button>
+          </div>
+        </div>
+      )}
+    
+{/* Coin Flip Result Modal */}
+      {coinResult && (
+        <div onClick={() => setCoinResult(null)} style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.9)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          padding: '2rem'
+        }}>
+          <div onClick={(e) => e.stopPropagation()} style={{
+            background: coinResult === coinChoice 
+              ? 'linear-gradient(to bottom right, #10b981, #059669)' 
+              : 'linear-gradient(to bottom right, #ef4444, #dc2626)',
+            borderRadius: '1rem',
+            padding: '3rem',
+            maxWidth: '400px',
+            border: `3px solid ${coinResult === coinChoice ? '#10b981' : '#ef4444'}`,
+            textAlign: 'center',
+            boxShadow: `0 0 50px ${coinResult === coinChoice ? '#10b981' : '#ef4444'}`
+          }}>
+            <div style={{ fontSize: '120px', marginBottom: '1rem' }}>
+              {coinResult === 'heads' ? '👑' : '🦅'}
+            </div>
+            <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
+              {coinResult === 'heads' ? 'HEADS!' : 'TAILS!'}
+            </h2>
+            <p style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.9 }}>
+              You picked: {coinChoice.toUpperCase()}
+            </p>
+            <h3 style={{ 
+              fontSize: '2.5rem', 
+              marginBottom: '2rem',
+              fontWeight: 'bold'
+            }}>
+              {coinResult === coinChoice ? '🎉 YOU WIN! 🎉' : '😢 YOU LOSE'}
+            </h3>
+            <p style={{ fontSize: '1rem', marginBottom: '2rem', opacity: 0.8 }}>
+              {coinResult === coinChoice ? 'Won 0.2 TEST (2x payout)' : 'Lost 0.1 TEST'}
+            </p>
+            <button onClick={() => setCoinResult(null)} style={{
+              background: 'white',
+              color: '#1e293b',
+              padding: '1rem 2rem',
+              borderRadius: '0.5rem',
+              border: 'none',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              width: '100%'
+            }}>
+              Play Again
+            </button>
+          </div>
+        </div>
+      )}
+  <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <h1 style={{
@@ -680,9 +870,53 @@ export default function Home() {
               >ℹ️</button>
             </div>
             <p style={{ color: '#d1d5db', marginBottom: '1rem', fontSize: '0.875rem' }}>
-              Double or nothing! 50% chance to win 2x your bet.
+                Double or nothing! 50% chance to win 2x your bet.
             </p>
-            <div style={{
+            
+
+{/* Heads/Tails Selector */}
+            <div style={{ 
+              display: 'flex', 
+              gap: '0.5rem', 
+              marginBottom: '1rem' 
+            }}>
+              <button
+                onClick={() => setCoinChoice('heads')}
+                style={{
+                  flex: 1,
+                  padding: '0.75rem',
+                  background: coinChoice === 'heads' ? 'linear-gradient(to right, #f59e0b, #d97706)' : 'rgba(255,255,255,0.1)',
+                  border: coinChoice === 'heads' ? '2px solid #f59e0b' : '2px solid rgba(255,255,255,0.2)',
+                  borderRadius: '0.5rem',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s'
+                }}
+              >
+                🪙 Heads
+              </button>
+              <button
+                onClick={() => setCoinChoice('tails')}
+                style={{
+                  flex: 1,
+                  padding: '0.75rem',
+                  background: coinChoice === 'tails' ? 'linear-gradient(to right, #f59e0b, #d97706)' : 'rgba(255,255,255,0.1)',
+                  border: coinChoice === 'tails' ? '2px solid #f59e0b' : '2px solid rgba(255,255,255,0.2)',
+                  borderRadius: '0.5rem',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s'
+                }}
+              >
+                🪙 Tails
+              </button>
+            </div>
+
+
+
+<div style={{
               background: 'rgba(0,0,0,0.3)',
               borderRadius: '0.5rem',
               padding: '0.75rem',
