@@ -32,9 +32,11 @@ export default function Home() {
   const [diceRollState, setDiceRollState] = useState('idle');
   const [mysteryBoxState, setMysteryBoxState] = useState('idle');
   const [revealedNFT, setRevealedNFT] = useState(null);
-const [coinChoice, setCoinChoice] = useState('heads');  
-const [coinResult, setCoinResult] = useState(null);
-const [wrongNetwork, setWrongNetwork] = useState(false);
+  const [coinChoice, setCoinChoice] = useState('heads');  
+  const [coinResult, setCoinResult] = useState(null);
+  const [diceResult, setDiceResult] = useState(null);
+  const [currentGame, setCurrentGame] = useState(null);
+  const [wrongNetwork, setWrongNetwork] = useState(false);
 
   // Sound effects
   const playSound = (type) => {
@@ -189,8 +191,9 @@ const [wrongNetwork, setWrongNetwork] = useState(false);
   setMysteryBoxState('idle');
       setLoading(true);
       setIsAnimating(true);
-setCoinResult(null);     
- playSound('click');
+  setCoinResult(null);     
+  setDiceResult(null);
+  playSound('click');
       
       let data;
       let gameName;
@@ -200,7 +203,7 @@ setCoinResult(null);
         gameName = "Mystery Box";
         setMessage("🎁 Opening mystery box...");
         setMysteryBoxState('shaking');
-
+        setCurrentGame({ type: 'mysteryBox', multiplier: 0 });
 
 
 // Generate random NFT after animation with procedural generation
@@ -286,7 +289,15 @@ setTimeout(() => {
         gameName = "Dice Roll";
         setMessage("🎲 Rolling dice...");
         setDiceRollState('rolling');
-       }
+        setCurrentGame({ type: 'diceRoll', multiplier: multiplier });
+// Show dice result after animation
+setTimeout(() => {
+  const roll = Math.floor(Math.random() * 100) + 1;
+  const winChance = 100 / (multiplier / 100);
+  const won = roll <= winChance;
+  setDiceResult({ roll, multiplier: multiplier / 100, won, winChance: winChance.toFixed(1) });
+}, 2000);     
+ }
 
       const txHash = await window.ethereum.request({
         method: 'eth_sendTransaction',
@@ -322,7 +333,7 @@ setTimeout(() => {
 
       if (receipt) {
         playSound('win');
-        setMessage(`✅ ${gameName} played! Transaction confirmed!`);
+       setMessage(`✅ ${gameName} played! Transaction confirmed!`);
         
         // Add to recent games
         setRecentGames(prev => [{
@@ -508,6 +519,72 @@ setTimeout(() => {
           zIndex: 9999,
           padding: '2rem'
         }}>
+
+{/* Dice Roll Result Modal */}
+      {diceResult && (
+        <div onClick={() => setDiceResult(null)} style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.9)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          padding: '2rem'
+        }}>
+          <div onClick={(e) => e.stopPropagation()} style={{
+            background: diceResult.won 
+              ? 'linear-gradient(to bottom right, #10b981, #059669)' 
+              : 'linear-gradient(to bottom right, #ef4444, #dc2626)',
+            borderRadius: '1rem',
+            padding: '3rem',
+            maxWidth: '400px',
+            border: `3px solid ${diceResult.won ? '#10b981' : '#ef4444'}`,
+            textAlign: 'center',
+            boxShadow: `0 0 50px ${diceResult.won ? '#10b981' : '#ef4444'}`
+          }}>
+            <div style={{ fontSize: '120px', marginBottom: '1rem' }}>🎲</div>
+            <h2 style={{ fontSize: '3rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+              {diceResult.roll}
+            </h2>
+            <p style={{ fontSize: '1.2rem', marginBottom: '1rem', opacity: 0.9 }}>
+              Multiplier: {diceResult.multiplier}x
+            </p>
+            <p style={{ fontSize: '1rem', marginBottom: '1rem', opacity: 0.8 }}>
+              Win chance: {diceResult.winChance}%
+            </p>
+            <p style={{ fontSize: '0.9rem', marginBottom: '1.5rem', opacity: 0.7 }}>
+              (Needed ≤ {Math.floor(diceResult.winChance)} to win)
+            </p>
+            <h3 style={{ 
+              fontSize: '2.5rem', 
+              marginBottom: '2rem',
+              fontWeight: 'bold'
+            }}>
+              {diceResult.won ? '🎉 YOU WIN! 🎉' : '😢 YOU LOSE'}
+            </h3>
+            <p style={{ fontSize: '1rem', marginBottom: '2rem', opacity: 0.8 }}>
+              {diceResult.won ? `Won ${(0.1 * diceResult.multiplier).toFixed(2)} TEST` : 'Lost 0.1 TEST'}
+            </p>
+            <button onClick={() => setDiceResult(null)} style={{
+              background: 'white',
+              color: '#1e293b',
+              padding: '1rem 2rem',
+              borderRadius: '0.5rem',
+              border: 'none',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              width: '100%'
+            }}>
+              Roll Again
+            </button>
+          </div>
+        </div>
+      )}
           <div onClick={(e) => e.stopPropagation()} style={{
             background: coinResult === coinChoice 
               ? 'linear-gradient(to bottom right, #10b981, #059669)' 
