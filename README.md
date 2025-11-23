@@ -52,27 +52,36 @@ The $200B+ gambling industry runs on trust, not proof.
 - 🔔 Network detection
 
 ## 🏗️ Architecture
+
+### System Flow
 ```
-┌─────────────┐         ┌──────────────┐
-│   Frontend  │────────▶│   Sapphire   │
-│   (React)   │         │  Contracts   │
-└─────────────┘         └──────┬───────┘
-                               │
-                        ┌──────▼───────┐
-                        │     ROFL     │
-                        │  (TEE-based  │
-                        │  Randomness) │
-                        └──────────────┘
+┌─────────────┐      ┌──────────────────┐      ┌─────────────┐
+│   Player    │─────▶│ Sapphire Smart   │─────▶│ ROFL TEE    │
+│  (Wallet)   │      │    Contracts     │      │ (Intel TDX) │
+└─────────────┘      └──────────────────┘      └─────────────┘
+       │                      │                        │
+       │                      │                        │
+       ▼                      ▼                        ▼
+   Places Bet          Emits Event           Generates Random
+                     Receives Result        Signs with TEE Key
+                      Pays Winner          Verifiable Result
 ```
 
-**Flow:**
-1. Player places bet via frontend
-2. Transaction sent to Sapphire smart contract
-3. GameCreated event emitted
-4. ROFL detects event & generates random number in TEE
-5. ROFL determines outcome & signs result
-6. ROFL submits resolution transaction
-7. Smart contract pays out winner
+### Game Flow
+
+1. 🎲 **Player places bet** → Transaction sent to Sapphire smart contract
+2. 📝 **Smart contract emits event** → GameCreated event with bet details
+3. 🔐 **ROFL detects event in TEE** → Generates cryptographic randomness using Intel TDX
+4. ✍️ **ROFL signs result** → Uses hardware-protected private key (inaccessible to developer)
+5. ✅ **Smart contract verifies signature** → Validates TEE attestation and pays winner
+6. 🎉 **Player receives result** → Transparent, verifiable, tamper-proof outcome
+
+### Security Guarantees
+
+- **🔐 Secure Randomness**: All random numbers generated in ROFL's Trusted Execution Environment (TEE)
+- **✅ Provably Fair**: ROFL signs all results with TEE-backed keys - fully verifiable on-chain
+- **🚫 No Cheating**: Even the developer cannot see or manipulate results - pure hardware isolation
+
 
 ## 🔐 ROFL (Runtime OFf-chain Logic)
 
