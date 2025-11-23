@@ -31,12 +31,15 @@ The $200B+ gambling industry runs on trust, not proof.
 - **🎲 Dice Roll** - Choose your multiplier (1.1x to 6x)
 - **🏆 Lottery** - Weekly prize pools (ready for ROFL)
 
-### Tech Stack
-- **Frontend**: Next.js 14 + React + TailwindCSS
-- **Smart Contracts**: Solidity 0.8.20 on Sapphire
-- **Backend Logic**: Rust ROFL app in TEE
-- **Randomness**: ROFL TEE + Chainlink VRF integration
-- **Multi-chain**: Deployed on Sapphire, compatible with Flare
+## 🛠️ Tech Stack
+
+* **Frontend**: Next.js 14 + React + Custom CSS Animations
+* **Smart Contracts**: Solidity 0.8.20 on Oasis Sapphire Testnet
+* **Backend Logic**: Python ROFL app in Intel TDX TEE
+* **Randomness**: ROFL TEE (hardware-based cryptographic randomness)
+* **Blockchain**: Oasis Sapphire (confidential EVM)
+* **Container**: Docker (published to Docker Hub)
+* **Deployment**: Vercel (frontend) + Sapphire Testnet (contracts)
 
 ### UI Features
 - 🌐 Beautiful gradient UI with animations
@@ -129,8 +132,7 @@ All multipliers maintain fair expected value!
 
 ## 🎥 Demo
 
-**Live Demo**: https://proof-of-luck-casino-k0ar3wja3-iggy-s-projects.vercel.app
-
+**Live Demo**: https://proof-of-luck-casino-3qefeqjlu-iggy-s-projects.vercel.app
 **Video Demo**: [3-minute walkthrough coming soon]
 
 ## 🛠️ Local Development
