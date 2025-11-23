@@ -132,7 +132,7 @@ All multipliers maintain fair expected value!
 
 ## 🎥 Demo
 
-**Live Demo**: https://quantumbet-3qefeqjlu-iggy-s-projects.vercel.app
+**Live Demo**: https://proof-of-luck-casino-dgf0d2fr2-iggy-s-projects.vercel.app
 **Video Demo**: [3-minute walkthrough coming soon]
 
 ## 🛠️ Local Development
